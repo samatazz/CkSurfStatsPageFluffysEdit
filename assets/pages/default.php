@@ -12,6 +12,7 @@ if ($conn->connect_error) {
 
 //Servers list
 $file = fopen("servers.txt","r");
+$servers_table ='';
 while(! feof($file))
 {
 	$pieces = explode("|", fgets($file));
@@ -21,12 +22,13 @@ fclose($file);
 
 //Leaderboard list
 $database_call = $db_prefix."playerrank";
-($stmt = $conn->prepare("SELECT steamid,name,country,points,finishedmaps,lastseen FROM $database_call ORDER BY points DESC LIMIT 10")) or trigger_error($conn->error, E_USER_ERROR);
+($stmt = $conn->prepare("SELECT steamid,name,country,points,finishedmapspro FROM $database_call ORDER BY points DESC LIMIT 10")) or trigger_error($conn->error, E_USER_ERROR);
 $stmt->execute() or trigger_error($stmt->error, E_USER_ERROR);
 ($stmt_result = $stmt->get_result()) or trigger_error($stmt->error, E_USER_ERROR);
+$leaderboard_table ='';
 if ($stmt_result->num_rows > 0) {
 	while($row = $stmt_result->fetch_assoc()) {
-		$leaderboard_table .="<tr><td><a href='?view=profile&id=".htmlentities($row["steamid"])."'>".htmlentities($row["name"])."</a></td><td>".htmlentities($row["country"])."</td><td>".htmlentities($row["points"])."</td><td>".htmlentities($row["finishedmaps"])."<td>".htmlentities($row["lastseen"])."</td></tr>";
+		$leaderboard_table .="<tr><td><a href='?view=profile&id=".htmlentities($row["steamid"])."'>".htmlentities($row["name"])."</a></td><td>".htmlentities($row["country"])."</td><td>".htmlentities($row["points"])."</td><td>".htmlentities($row["finishedmapspro"])."</td></tr>";
 	}
 }
 
@@ -37,6 +39,7 @@ $database_call_2 = $db_prefix."maptier";
 ($stmt = $conn->prepare("SELECT steamid,name,runtime,map,date FROM $database_call ORDER BY date DESC LIMIT 20")) or trigger_error($conn->error, E_USER_ERROR);
 $stmt->execute() or trigger_error($stmt->error, E_USER_ERROR);
 ($stmt_result = $stmt->get_result()) or trigger_error($stmt->error, E_USER_ERROR);
+$scores_table ='';
 if ($stmt_result->num_rows > 0) {
 	while($row = $stmt_result->fetch_assoc()) {
 		
@@ -80,7 +83,6 @@ $conn->close();
 			<th>Country</th>
 			<th>Points</th>
 			<th>Maps Played</th>
-			<th>Last Played</th>
 		</tr>
 	</thead>
 	<tbody>

@@ -44,7 +44,7 @@ foreach ($map_array as $value){
 	if ($result->num_rows > 0) {
 		$x = 1;
 		while($row = $result->fetch_assoc()) {
-		    $record_times[$row["mapname"]] = "";
+		    substr($record_times[$row["mapname"]],1);
 		if($row["steamid"] == $steamid){ $recordStat++; $record_times[$row["mapname"]] = "<span class='rank_$x' data-toggle='tooltip' data-placement='bottom' title='' data-original-title='".$lang_rank[$x]."'><i class='fa fa-trophy' aria-hidden='true'></i></span><ck-o\" aria-hidden=\"true\"></i>"; } $x++;
 		}
 	}
@@ -62,7 +62,7 @@ if($page_start >=1){ $page_start = $page_start - 1; }
 if($page_start <0){ $page_start = 0; }
 $page_start = $page_start * 30;
 
-$sql = "SELECT * FROM $database_call WHERE steamid = '$steamid' LIMIT $page_start,30";
+$sql = "SELECT mapname,runtimepro FROM $database_call WHERE steamid = '$steamid' LIMIT $page_start,30";
 $result_save = $conn->query($sql);
 
 while($row = $result_save->fetch_assoc()) {
@@ -71,22 +71,21 @@ while($row = $result_save->fetch_assoc()) {
 
 $database_call = $db_prefix."playerrank";
 
-$sql = "SELECT * FROM $database_call WHERE steamid = '$steamid'";
+$sql = "SELECT points,country,finishedmapspro,name FROM $database_call WHERE steamid = '$steamid'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
         
-		echo "<h2><a href='http://steamcommunity.com/profiles/".$steam_profile."'>".$row["name"]."</a></h2>Last seen on ". $row["lastseen"]."<br/><br/>";
+		echo "<h2><a href='http://steamcommunity.com/profiles/".$steam_profile."'>".$row["name"]."</a></h2><br/><br/>";
 		
 		?>
 		<table class="table table-striped table-hover ">
 			<tbody>
 				<?php
 					echo"<tr><td><b>Points</b> : ".$row["points"]."</td><td><b>Country</b> : ".$row["country"]."</tr>";
-					echo"<tr><td><b>Win Ratio</b> : ".$row["winratio"]."</td><td><b>Points Ratio</b> : ".$row["pointsratio"]."</tr>";
-					echo"<tr><td><b>Finished Maps</b> : ".$row["finishedmaps"]."</td><td><b>Records</b> : ".$recordStat."</tr>";
+					echo"<tr><td><b>Finished Maps</b> : ".$row["finishedmapspro"]."</td><td><b>Records</b> : ".$recordStat."</tr>";
 				?>
 			</tbody>
 		</table>

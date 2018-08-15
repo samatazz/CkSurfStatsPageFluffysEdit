@@ -1,3 +1,8 @@
+<?php
+ini_set('display_errors', 0);  
+error_reporting(~E_ALL & ~E_NOTICE & ~E_USER_NOTICE);
+?>
+
 <?php $secure = 1; include("config.php"); include("assets/lang/$conf_language.php"); $page_topic = htmlspecialchars($_GET['view'], ENT_QUOTES); ?>
 <?php
 function processFloat($seconds) {
@@ -91,10 +96,6 @@ function processFloat($seconds) {
 	}
 
 	?>
-
-	<footer>
-	Assembled by <a href="https://gitlab.com/Rowedahelicon/CkSurfStatsPage">Rowedahelicon</a> <span style="font-size:8pt;">(V.1.3.)</span>, CS:GO CkSurf built by <a href="https://forums.alliedmods.net/showthread.php?t=264498">Jonitaikaponi</a><?php if($use_marco_cksurf == '1'){ echo" & <a href='https://github.com/marcowmadeira/ckSurf'>Marcowmadeira</a>"; } ?> <a href="humans.txt"><img src="assets/images/humanstxt-transparent-color.png" alt="Humans.txt image" /></a>
-	</footer>
 
 </div>
 </body>

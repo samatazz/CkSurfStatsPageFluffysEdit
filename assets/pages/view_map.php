@@ -36,15 +36,6 @@ $result = $conn->query($sql);
 
 <h2>Record times</h2>
 
-<?php
-if($use_marco_cksurf == '1'){
-	echo"<div class=\"btn-group\" role=\"group\" aria-label=\"...\">
-		<button type=\"button\" class=\"btn btn-primary\">Records</button>
-		<a class=\"btn btn-default\" href=\"?view=records&name=$mapname&p=1\">Stage Records</a>
-	</div>";
-}
-?>
-
 <nav aria-label="Page navigation">
   <ul class="pagination">
     <li>
